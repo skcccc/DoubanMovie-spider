@@ -9,10 +9,10 @@ import xlwt
 
 class DoubanPipeline(object):
     def __init__(self):
-        self.writefile = open('film.txt', 'w')
         self.workbook = xlwt.Workbook()
         self.sheet = self.workbook.add_sheet("Sheet1")
-        self.n = -1
+        self.i = 0
+        self.n = 0
 
         pass
 
@@ -48,26 +48,34 @@ class DoubanPipeline(object):
             return movie_item
 
         info = process_info(self)
-        print(info['name'], info['score'], info['director'], info['screenwriter'], info['type'], info['country'], info['language'], info['date'], info['length'])
 
-        self.writefile.write(info['name']+info['score']+ info['director']+ info['screenwriter']+ info['type']+info['country']+ info['language']+ info['date']+info['length'])
-        i = 0
-        self.n += 1
-        self.sheet.write(i, self.n, info['name'])
-        self.sheet.write(i, self.n + 1, info['name'])
-        self.sheet.write(i, self.n + 2, info['name'])
-        self.sheet.write(i, self.n + 3, info['name'])
-        self.sheet.write(i, self.n + 4, info['name'])
-        self.sheet.write(i, self.n + 5, info['name'])
-        self.sheet.write(i, self.n + 6, info['name'])
-        self.sheet.write(i, self.n + 7, info['name'])
-        self.sheet.write(i, self.n + 8, info['name'])
-        self.sheet.write(i, self.n + 9, info['name'])
-        self.workbook.save("film.xls")
+        #self.n = 1
+        self.i +=1
+        self.sheet.write(self.i, self.n, info['name'])
+        self.sheet.write(self.i, self.n+1, info['type'])
+        self.sheet.write(self.i, self.n+2, info['director'])
+        self.sheet.write(self.i, self.n+3, info['screenwriter'])
+        self.sheet.write(self.i, self.n+4, info['country'])
+        self.sheet.write(self.i, self.n+5, info['language'])
+        self.sheet.write(self.i, self.n+6, info['date'])
+        self.sheet.write(self.i, self.n+7, info['length'])
+        self.sheet.write(self.i, self.n+8, info['score'])
+        # self.sheet.write(self.i, self.n+9, info['name'])
+
+
+
         return item
 
-        def close_spider(self, spider):
-            self.workbook.save('film.xls')
+    def close_spider(self, spider):
+        self.workbook.save('电影列表.xls')
 
-        def open_spider(self, spider):
-            pass
+    def open_spider(self, spider):
+        self.sheet.write(0, 0, '电影')
+        self.sheet.write(0, 1, '类型')
+        self.sheet.write(0, 2, '导演')
+        self.sheet.write(0, 3, '编剧')
+        self.sheet.write(0, 4, '国家/地区')
+        self.sheet.write(0, 5, '语言')
+        self.sheet.write(0, 6, '上映日期')
+        self.sheet.write(0, 7, '片长')
+        self.sheet.write(0, 8, '评分')
