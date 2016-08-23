@@ -4,11 +4,16 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
-
+import xlrd
+import xlwt
 
 class DoubanPipeline(object):
     def __init__(self):
-        #self.file = open('film.txt', 'w')
+        self.writefile = open('film.txt', 'w')
+        self.workbook = xlwt.Workbook()
+        self.sheet = self.workbook.add_sheet("Sheet1")
+        self.n = -1
+
         pass
 
     def process_item(self, item, spider):
@@ -45,4 +50,24 @@ class DoubanPipeline(object):
         info = process_info(self)
         print(info['name'], info['score'], info['director'], info['screenwriter'], info['type'], info['country'], info['language'], info['date'], info['length'])
 
+        self.writefile.write(info['name']+info['score']+ info['director']+ info['screenwriter']+ info['type']+info['country']+ info['language']+ info['date']+info['length'])
+        i = 0
+        self.n += 1
+        self.sheet.write(i, self.n, info['name'])
+        self.sheet.write(i, self.n + 1, info['name'])
+        self.sheet.write(i, self.n + 2, info['name'])
+        self.sheet.write(i, self.n + 3, info['name'])
+        self.sheet.write(i, self.n + 4, info['name'])
+        self.sheet.write(i, self.n + 5, info['name'])
+        self.sheet.write(i, self.n + 6, info['name'])
+        self.sheet.write(i, self.n + 7, info['name'])
+        self.sheet.write(i, self.n + 8, info['name'])
+        self.sheet.write(i, self.n + 9, info['name'])
+        self.workbook.save("film.xls")
         return item
+
+        def close_spider(self, spider):
+            self.workbook.save('film.xls')
+
+        def open_spider(self, spider):
+            pass
