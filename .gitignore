@@ -1,4 +1,4 @@
 /.idea/
 /douban/__pycache__
-/douban/*.txt
-/douban/*.xls
+film.txt
+电影列表.xls
